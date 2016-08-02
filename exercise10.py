@@ -11,9 +11,9 @@ for index, line in enumerate(show_bgp):
 
 route_table = show_bgp[starting_index:]
 
-print '{:<14} {:<}'.format('Route', 'AS Path')
+print '{:<14} {:<}'.format('Prefix', 'AS Path')
 for route in route_table:
     parted_line = route.split()
-    route = parted_line[1]
+    prefix = parted_line[1]
     as_path = ' '.join(parted_line[5:-1])
-    print '{:<14} {:<}'.format(route, as_path)
+    print '{:<14} {:<}'.format(prefix, as_path)

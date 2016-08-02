@@ -36,16 +36,18 @@ def get_uptime(show_vers):
         if 'uptime' in line:
             uptime = line.split('uptime is ')[1]
             return uptime
+
 filename = 'data_show_version.txt'
 show_vers = get_show_vers(filename)
-serial_num = get_serial_num(show_vers)
-vendor = get_vendor(show_vers)
-model = get_model(show_vers)
-os_vers = get_os_vers(show_vers)
-uptime = get_uptime(show_vers)
 
-print serial_num
-print vendor
-print model
-print os_vers
-print uptime
+output_dict = { 
+    'Serial Number': get_serial_num(show_vers),
+    'Vendor': get_vendor(show_vers),
+    'Model': get_model(show_vers),
+    'OS Version': get_os_vers(show_vers),
+    'Uptime': get_uptime(show_vers)
+}
+
+for key, value in output_dict.items():
+    print '{:<14}: {}'.format(key, value)
+

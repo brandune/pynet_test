@@ -1,0 +1,4 @@
+configure terminal
+vlan 784
+name brandons_other_vlan
+end

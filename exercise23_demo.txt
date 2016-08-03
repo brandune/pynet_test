@@ -1,0 +1,8 @@
+(applied_python)[bboudrias@ip-172-30-0-6 ~]$ python
+Python 2.7.10 (default, Jul 20 2016, 20:53:27)
+[GCC 4.8.3 20140911 (Red Hat 4.8.3-9)] on linux2
+Type "help", "copyright", "credits" or "license" for more information.
+>>> import exercise23
+>>> exercise23.the_funk('hello!')
+hello!
+>>>

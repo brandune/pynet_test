@@ -1,0 +1,19 @@
+---
+- name: Set up an Access Port
+  hosts: arista
+  tasks:
+    - name: set up an access port
+      eos_switchport: 
+        name: "{{ item.name }}"
+        mode: "{{ item.mode}}"
+        access_vlan: "{{ item.access_vlan }}"
+        username: "{{ eapi_username }}"
+        password: "{{ eapi_password }}"
+        host: "{{ eapi_hostname }}" 
+        port: "{{ eapi_port }}"
+        transport: https
+      with_items:
+        - name: Ethernet4
+          mode: access
+          access_vlan: 963
+...

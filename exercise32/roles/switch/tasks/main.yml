@@ -1,0 +1,4 @@
+-
+    name: generate confs
+    template: src=base.j2 dest=/home/bboudrias/ansible_out/{{item.hostname}}.conf
+    with_items: "{{switches}}"

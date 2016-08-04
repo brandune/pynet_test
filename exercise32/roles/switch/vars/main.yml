@@ -1,0 +1,7 @@
+---
+switches:
+    - hostname: switch1
+      secret: secret1
+    - hostname: switch2
+      secret: secret2
+...

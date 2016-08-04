@@ -1,0 +1,18 @@
+---
+- name: Set up VLANs 
+  hosts: arista
+  tasks:
+    - name: set up vlans
+      eos_vlan: 
+        name: "{{ item.name }}"
+        vlanid: "{{ item.vlanid }}"
+        username: "{{ eapi_username }}"
+        password: "{{ eapi_password }}"
+        host: "{{ eapi_hostname }}" 
+        port: "{{ eapi_port }}"
+        transport: https
+      with_items:
+        - { name: nineSixThree, vlanid: 963 }
+        - { name: nineSixFour, vlanid: 964 }
+        - { name: nineSixFive, vlanid: 965 }
+...

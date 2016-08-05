@@ -1,0 +1,23 @@
+---
+- name: Set up VLANs 
+  hosts: arista
+  vars:
+    creds:
+      username: "{{ eapi_username }}"
+      password: "{{ eapi_password }}"
+      host: "{{ eapi_hostname }}"
+  tasks:
+    - name: set up vlans with eos_config
+      eos_config: 
+        authorize: yes
+        provider: "{{ creds }}"
+        transport: cli
+        parents: [ 'vlan {{ item.vlanid }}' ]
+        lines: 
+          - name {{ item.name }}
+        before: ['no vlan {{ item.vlanid }}']
+      with_items:
+        - { name: nineSixThree, vlanid: 963 }
+        - { name: nineSixFour, vlanid: 964 }
+        - { name: nineSixFive, vlanid: 965 }
+...

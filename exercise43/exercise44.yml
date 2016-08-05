@@ -1,0 +1,32 @@
+---
+- name: exercise43_acl
+  hosts: cisco
+  vars:
+    creds: 
+      username: "{{ username }}"
+      password: "{{ password }}"
+      host: "{{ host }}"
+  tasks:
+    - name: config acl
+      ios_config:
+        authorize: yes
+        provider: "{{ creds }}"
+        parents: ['ip access-list extended brandon1']
+        before: ['no ip access-list extended brandon1']
+        lines:
+          - permit ip host 1.1.1.1 host 2.2.2.2
+          - permit ip host 3.3.3.3 host 4.4.4.4
+          - permit ip host 4.4.4.4 host 5.5.5.5
+          - permit ip host 2.2.2.2 host 3.3.3.3
+          - permit ip host 5.5.5.5 host 6.6.6.6
+        replace: block
+        match: exact
+      notify: write mem
+  handlers:
+    - name: write mem
+      ios_command:
+        authorize: yes
+        provider: "{{ creds }}"
+        commands: ['write mem']
+      changed_when: True
+...

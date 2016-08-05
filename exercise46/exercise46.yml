@@ -1,0 +1,24 @@
+---
+- name: Set up VLANs 
+  hosts: cisco
+  tasks:
+    - name: show vlan
+      ntc_show_command: 
+        connection: ssh
+        platform: cisco_ios
+        host: "{{ host }}"
+        username: "{{ username }}"
+        password: "{{ password }}"
+        command: show interfaces
+        template_dir: /home/bboudrias/ntc-ansible/ntc-templates/templates/
+      register: show_int_output
+
+    - debug: var=show_int_output
+
+    - name: set vars 
+      set_fact:
+        intf_name: "{{ show_int_output.response[0].interface }}"
+        intf_status: "{{ show_int_output.response[0].link_status }}"
+
+    - debug: msg="{{ intf_name }} is {{ intf_status }}"
+...

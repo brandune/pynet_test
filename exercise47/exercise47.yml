@@ -1,0 +1,23 @@
+---
+- name: Set up VLANs 
+  hosts: cisco
+  tasks:
+    - name: show ints
+      ntc_show_command: 
+        connection: ssh
+        platform: cisco_ios
+        host: "{{ host }}"
+        username: "{{ username }}"
+        password: "{{ password }}"
+        command: show interfaces
+        template_dir: /home/bboudrias/ntc-ansible/ntc-templates/templates/
+      register: show_int_output
+
+    - set_fact:
+        interfaces: "{{ show_int_output.response }}"
+
+    - name: find vlan127
+      with_items: "{{ interfaces }}"
+      when: item.interface == 'Vlan127'
+      debug: msg="This is when I would remove Vlan127"
+...

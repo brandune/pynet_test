@@ -1,0 +1,39 @@
+---
+- name: Set up VLANs 
+  hosts: pynet-sw4
+    
+  tasks:
+    - name: napalm make diff
+      napalm_install_config: 
+        hostname: "{{ eapi_hostname }}"
+        username: "{{ eapi_username }}"
+        password: "{{ eapi_password }}"
+        dev_os: eos
+        config_file: vlan.cfg
+        commit_changes: False
+        replace_config: False
+        diff_file: "{{ inventory_hostname }}.cfg"
+      tags: diff
+
+    - name: get diff
+      set_fact:
+        diff: "{{ lookup('file', '{{ inventory_hostname }}.cfg') }}"
+      tags: diff
+
+    - name: display diff
+      debug: 
+        msg: "{{ diff }}"
+      tags: diff
+
+    - name: napalm merge diff
+      napalm_install_config: 
+        hostname: "{{ eapi_hostname }}"
+        username: "{{ eapi_username }}"
+        password: "{{ eapi_password }}"
+        dev_os: eos
+        config_file: vlan.cfg
+        commit_changes: True
+        replace_config: False
+        diff_file: "{{ inventory_hostname }}.cfg"
+      tags: merge
+...
